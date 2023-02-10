@@ -1,10 +1,10 @@
 all: mvote
 
 clean:
-	rm -f mvote.o Votenode.o PostCode.o MVoteSystem.o HashTable.o mvote
+	rm -f mvote.o VoteNode.o PostCode.o MVoteSystem.o HashTable.o mvote
 
-mvote: mvote.o Votenode.o PostCode.o MVoteSystem.o HashTable.o
-	gcc mvote.o Votenode.o PostCode.o MVoteSystem.o HashTable.o -o mvote
+mvote: mvote.o VoteNode.o PostCode.o MVoteSystem.o HashTable.o
+	gcc mvote.o VoteNode.o PostCode.o MVoteSystem.o HashTable.o -o mvote
 
 mvote.o: mvote.c MVoteSystem.h PostCode.h HashTable.h VoteNode.h
 	gcc -c mvote.c
@@ -18,6 +18,6 @@ HashTable.o: HashTable.c HashTable.h VoteNode.h
 PostCode.o: PostCode.c PostCode.h VoteNode.h
 	gcc -c PostCode.c
 
-Votenode.o: VoteNode.c VoteNode.h
+VoteNode.o: VoteNode.c VoteNode.h
 	gcc -c VoteNode.c
 
