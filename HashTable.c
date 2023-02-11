@@ -13,6 +13,7 @@ BucketNode* createBucketNode(int pin, VoteNode*node){
 Bucket* createBucket(int bucket_size){
     Bucket* bucket = (Bucket*) malloc(sizeof(Bucket));
     bucket->bucket_size = bucket_size;
+    bucket->next = NULL;
     bucket->nodes = (BucketNode**) calloc(bucket_size, sizeof(BucketNode));
     for(int i = 0; i<bucket_size; i++){
         bucket->nodes[i] = NULL;
@@ -153,7 +154,8 @@ int insertVoter(VoteNode* node, HashTable* table, int nextHash){
         hashed_val = hash(pin, table);
     }else{
         hashed_val = hash_hi1(pin, table);
-    }
+    } 
+    printf("%s %d %d %lu\n", node->fname, hashed_val, table->num_buckets);
     Bucket* head = table->buckets[hashed_val];
     int done = 0;
     int newPage = 0;
