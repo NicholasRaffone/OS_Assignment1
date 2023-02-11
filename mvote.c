@@ -53,15 +53,6 @@ int main(int argc, char* argv[]){
 
     // Infinite loop for listening to commands
 
-
-    updateVotervote(system, 100108);
-    updateVotervote(system, 100350);
-    updateVotervote(system, 101114);
-    updateVotervote(system, 101183);
-    updateVotervote(system, 100953);
-    updateVotervote(system, 101295);
-    updateVotervote(system, 100108);
-
     char* userInput = (char*) malloc(MAX_LINE_LENGTH*sizeof(char));
 
     while(1){
