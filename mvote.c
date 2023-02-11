@@ -40,7 +40,7 @@ int main(int argc, char* argv[]){
     int bucket_size = atoi(argv[4]);
 
     if (voterfp == NULL) {
-        printf("ERROR: Unable to open file: %s", argv[2]);
+        printf("ERROR: Unable to open file: %s\n", argv[2]);
         return 1;
     }
 
