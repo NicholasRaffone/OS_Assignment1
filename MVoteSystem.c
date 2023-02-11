@@ -19,6 +19,8 @@ int registerVoter(MVoteSystem* system, int pin, int vote, char* fname, char* lna
     VoteNode* node = createVoteNode(pin, vote, fname, lname, zip);
     int error = insertVoter(node, system->table, 0);
     if(error == 1){
+        // voter wasn't insernted. Delete the node and return an error value of 1
+        destroyVoteNode(node);
         return error;
     }
     system->num_registered+=1;
@@ -45,6 +47,7 @@ void updateVotervote(MVoteSystem* system, int pin){
 }
 
 void printVoterZipCodes(MVoteSystem* system){
+    // sort the postcode chain before displaying it in decreasing order
     system->postcodechain = sortPostCodes(system->postcodechain);
     printPostCodes(system->postcodechain);
 }

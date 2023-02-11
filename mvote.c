@@ -5,6 +5,7 @@
 #include "PostCode.h"
 #include "HashTable.h"
 #include "MVoteSystem.h"
+#include "mvote.h"
 #define MAX_LINE_LENGTH 1000
 #define MAX_NAME_LEN 100
 #define INITIAL_NUM_BUCKETS 4
@@ -80,6 +81,8 @@ int main(int argc, char* argv[]){
             int num_filled = sscanf(userInput, "i %d %s %s %d", &pin, newuserfname, newuserlname, &zip);
             if(num_filled != 4){
                 printf("Incorrect usage of i <pin> <fname> <lname> <zip>\n");
+                free(newuserlname);
+                free(newuserfname);
                 continue;
             }
             int error = registerVoter(system, pin, 0, newuserfname, newuserlname, zip);

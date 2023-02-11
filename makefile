@@ -6,7 +6,7 @@ clean:
 mvote: mvote.o VoteNode.o PostCode.o MVoteSystem.o HashTable.o
 	gcc mvote.o VoteNode.o PostCode.o MVoteSystem.o HashTable.o -o mvote
 
-mvote.o: mvote.c MVoteSystem.h PostCode.h HashTable.h VoteNode.h
+mvote.o: mvote.c mvote.h MVoteSystem.h PostCode.h HashTable.h VoteNode.h
 	gcc -c mvote.c
 
 MVoteSystem.o: MVoteSystem.c MVoteSystem.h PostCode.h HashTable.h

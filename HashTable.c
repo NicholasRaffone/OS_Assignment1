@@ -68,24 +68,13 @@ int hash(int pin, HashTable* table){
     return hi1;
 }
 
-// GETTERS 
 
 VoteNode* getVoter(HashTable* table, int pin){
-    //  If hi(k) ≥ p, choose bucket hi(k) since the bucket has not been split yet in the current round.
-    //  If hi(k) < p, choose bucket hi+1(k), which can be either hi(k) or its spit image hi(k) + 2im.
-
-    int init_hashval = hash_hi(pin, table);
-
-    int hashed_val;
-
-    if(init_hashval >= table->split_val){
-        hashed_val = init_hashval;
-    }else{
-        hashed_val = hash_hi1(pin, table);
-    }
+    int hashed_val = hash(pin, table);
 
     Bucket* head = table->buckets[hashed_val];
     int bucket_size = head->bucket_size;
+    // traverse over each bucket and overflow buckets until we find the desired user.
     while(head){
         for(int i=0; i < bucket_size && head->nodes[i]!=NULL; i++){
             VoteNode* currNode = head->nodes[i]->node;
@@ -97,8 +86,6 @@ VoteNode* getVoter(HashTable* table, int pin){
     }
     return NULL;
 }
-
-// SETTER UTIL FUNCTIONS
 
 void addNewBucket(HashTable* table){
     int new_size = table->num_buckets+1;
@@ -121,7 +108,6 @@ void redistribute(HashTable* table, int bucket_num){
     }
 }
 
-// N^2 2 pointer implementation to shift all elements leftwards so that there are no NULL spaces between elements.
 void rearrangeBucketNodes(HashTable* table){
     int num_buckets = table->num_buckets;
     for(int i=0; i<num_buckets; i++){
@@ -160,11 +146,6 @@ void rearrangeBucketNodes(HashTable* table){
     }
 }
 
-// SETTER FUNCTIONS
-
-// POSTCODE LEVEL SETTER
-
-// Insert Voter to hash table, if nexthash == 1, use the h i+1 hashing (in the case of an overflow redistribution)
 int insertVoter(VoteNode* node, HashTable* table, int nextHash){
     int pin = node->pin;
     int hashed_val;
@@ -198,7 +179,7 @@ int insertVoter(VoteNode* node, HashTable* table, int nextHash){
     }
     
 
-    // TRIGGER: New page has appeared. Let's redistribute (the wealth) 👍
+    // TRIGGER: New page has appeared when adding a new element. Let's redistribute (the elements) 👍
     if(newPage == 1 && nextHash == 0){
         addNewBucket(table);
 
@@ -208,6 +189,7 @@ int insertVoter(VoteNode* node, HashTable* table, int nextHash){
 
         table->split_val = (1+table->split_val)%(table->split_max_val);
 
+        // start a new round if we've reached the end
         if(table->split_val == 0){
             table->split_max_val *= 2;
             table->round_num += 1;
@@ -217,9 +199,6 @@ int insertVoter(VoteNode* node, HashTable* table, int nextHash){
 
     return 0;
 }
-
-
-// PRINT HELPERS
 
 void printTable(HashTable* table){
     int num_buckets = table->num_buckets;
@@ -252,8 +231,6 @@ void printVoter(HashTable* table, int pin){
 }
 
 // DESTROYER FUNCTIONS
-
-
 void destroyBucketNode(BucketNode* node){
     destroyVoteNode(node->node);
     free(node);
