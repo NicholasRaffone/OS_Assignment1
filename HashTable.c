@@ -155,7 +155,6 @@ int insertVoter(VoteNode* node, HashTable* table, int nextHash){
     }else{
         hashed_val = hash_hi1(pin, table);
     } 
-    printf("%s %d %d %lu\n", node->fname, hashed_val, table->num_buckets);
     Bucket* head = table->buckets[hashed_val];
     int done = 0;
     int newPage = 0;
